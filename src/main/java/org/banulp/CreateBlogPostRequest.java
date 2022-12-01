@@ -4,22 +4,19 @@
 package org.banulp;
 
 /**
- * Protobuf type {@code org.banulp.BlogPost}
+ * Protobuf type {@code org.banulp.CreateBlogPostRequest}
  */
-public  final class BlogPost extends
+public  final class CreateBlogPostRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:org.banulp.BlogPost)
-    BlogPostOrBuilder {
-  // Use BlogPost.newBuilder() to construct.
-  private BlogPost(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // @@protoc_insertion_point(message_implements:org.banulp.CreateBlogPostRequest)
+    CreateBlogPostRequestOrBuilder {
+  // Use CreateBlogPostRequest.newBuilder() to construct.
+  private CreateBlogPostRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private BlogPost() {
-    id_ = 0;
+  private CreateBlogPostRequest() {
     title_ = "";
     content_ = "";
-    createdAt_ = 0L;
-    modifiedAt_ = 0L;
   }
 
   @Override
@@ -27,7 +24,7 @@ public  final class BlogPost extends
   getUnknownFields() {
     return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
   }
-  private BlogPost(
+  private CreateBlogPostRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -47,31 +44,16 @@ public  final class BlogPost extends
             }
             break;
           }
-          case 8: {
-
-            id_ = input.readInt32();
-            break;
-          }
-          case 18: {
+          case 10: {
             String s = input.readStringRequireUtf8();
 
             title_ = s;
             break;
           }
-          case 26: {
+          case 18: {
             String s = input.readStringRequireUtf8();
 
             content_ = s;
-            break;
-          }
-          case 32: {
-
-            createdAt_ = input.readInt64();
-            break;
-          }
-          case 40: {
-
-            modifiedAt_ = input.readInt64();
             break;
           }
         }
@@ -87,29 +69,20 @@ public  final class BlogPost extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return Blog.internal_static_org_banulp_BlogPost_descriptor;
+    return Blog.internal_static_org_banulp_CreateBlogPostRequest_descriptor;
   }
 
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return Blog.internal_static_org_banulp_BlogPost_fieldAccessorTable
+    return Blog.internal_static_org_banulp_CreateBlogPostRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            BlogPost.class, Builder.class);
+            CreateBlogPostRequest.class, Builder.class);
   }
 
-  public static final int ID_FIELD_NUMBER = 1;
-  private int id_;
-  /**
-   * <code>int32 id = 1;</code>
-   */
-  public int getId() {
-    return id_;
-  }
-
-  public static final int TITLE_FIELD_NUMBER = 2;
+  public static final int TITLE_FIELD_NUMBER = 1;
   private volatile Object title_;
   /**
-   * <code>string title = 2;</code>
+   * <code>string title = 1;</code>
    */
   public String getTitle() {
     Object ref = title_;
@@ -124,7 +97,7 @@ public  final class BlogPost extends
     }
   }
   /**
-   * <code>string title = 2;</code>
+   * <code>string title = 1;</code>
    */
   public com.google.protobuf.ByteString
       getTitleBytes() {
@@ -140,10 +113,10 @@ public  final class BlogPost extends
     }
   }
 
-  public static final int CONTENT_FIELD_NUMBER = 3;
+  public static final int CONTENT_FIELD_NUMBER = 2;
   private volatile Object content_;
   /**
-   * <code>string content = 3;</code>
+   * <code>string content = 2;</code>
    */
   public String getContent() {
     Object ref = content_;
@@ -158,7 +131,7 @@ public  final class BlogPost extends
     }
   }
   /**
-   * <code>string content = 3;</code>
+   * <code>string content = 2;</code>
    */
   public com.google.protobuf.ByteString
       getContentBytes() {
@@ -174,24 +147,6 @@ public  final class BlogPost extends
     }
   }
 
-  public static final int CREATEDAT_FIELD_NUMBER = 4;
-  private long createdAt_;
-  /**
-   * <code>int64 createdAt = 4;</code>
-   */
-  public long getCreatedAt() {
-    return createdAt_;
-  }
-
-  public static final int MODIFIEDAT_FIELD_NUMBER = 5;
-  private long modifiedAt_;
-  /**
-   * <code>int64 modifiedAt = 5;</code>
-   */
-  public long getModifiedAt() {
-    return modifiedAt_;
-  }
-
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -204,20 +159,11 @@ public  final class BlogPost extends
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (id_ != 0) {
-      output.writeInt32(1, id_);
-    }
     if (!getTitleBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, title_);
     }
     if (!getContentBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, content_);
-    }
-    if (createdAt_ != 0L) {
-      output.writeInt64(4, createdAt_);
-    }
-    if (modifiedAt_ != 0L) {
-      output.writeInt64(5, modifiedAt_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, content_);
     }
   }
 
@@ -226,23 +172,11 @@ public  final class BlogPost extends
     if (size != -1) return size;
 
     size = 0;
-    if (id_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, id_);
-    }
     if (!getTitleBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, title_);
     }
     if (!getContentBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, content_);
-    }
-    if (createdAt_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(4, createdAt_);
-    }
-    if (modifiedAt_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(5, modifiedAt_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, content_);
     }
     memoizedSize = size;
     return size;
@@ -254,22 +188,16 @@ public  final class BlogPost extends
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof BlogPost)) {
+    if (!(obj instanceof CreateBlogPostRequest)) {
       return super.equals(obj);
     }
-    BlogPost other = (BlogPost) obj;
+    CreateBlogPostRequest other = (CreateBlogPostRequest) obj;
 
     boolean result = true;
-    result = result && (getId()
-        == other.getId());
     result = result && getTitle()
         .equals(other.getTitle());
     result = result && getContent()
         .equals(other.getContent());
-    result = result && (getCreatedAt()
-        == other.getCreatedAt());
-    result = result && (getModifiedAt()
-        == other.getModifiedAt());
     return result;
   }
 
@@ -280,86 +208,78 @@ public  final class BlogPost extends
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ID_FIELD_NUMBER;
-    hash = (53 * hash) + getId();
     hash = (37 * hash) + TITLE_FIELD_NUMBER;
     hash = (53 * hash) + getTitle().hashCode();
     hash = (37 * hash) + CONTENT_FIELD_NUMBER;
     hash = (53 * hash) + getContent().hashCode();
-    hash = (37 * hash) + CREATEDAT_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getCreatedAt());
-    hash = (37 * hash) + MODIFIEDAT_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getModifiedAt());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static BlogPost parseFrom(byte[] data)
+  public static CreateBlogPostRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static BlogPost parseFrom(java.io.InputStream input)
+  public static CreateBlogPostRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static BlogPost parseDelimitedFrom(java.io.InputStream input)
+  public static CreateBlogPostRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static BlogPost parseDelimitedFrom(
+  public static CreateBlogPostRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static BlogPost parseFrom(
+  public static CreateBlogPostRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -371,7 +291,7 @@ public  final class BlogPost extends
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(BlogPost prototype) {
+  public static Builder newBuilder(CreateBlogPostRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -386,25 +306,25 @@ public  final class BlogPost extends
     return builder;
   }
   /**
-   * Protobuf type {@code org.banulp.BlogPost}
+   * Protobuf type {@code org.banulp.CreateBlogPostRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:org.banulp.BlogPost)
-      BlogPostOrBuilder {
+      // @@protoc_insertion_point(builder_implements:org.banulp.CreateBlogPostRequest)
+      CreateBlogPostRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return Blog.internal_static_org_banulp_BlogPost_descriptor;
+      return Blog.internal_static_org_banulp_CreateBlogPostRequest_descriptor;
     }
 
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return Blog.internal_static_org_banulp_BlogPost_fieldAccessorTable
+      return Blog.internal_static_org_banulp_CreateBlogPostRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              BlogPost.class, Builder.class);
+              CreateBlogPostRequest.class, Builder.class);
     }
 
-    // Construct using org.banulp.BlogPost.newBuilder()
+    // Construct using org.banulp.CreateBlogPostRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -421,43 +341,34 @@ public  final class BlogPost extends
     }
     public Builder clear() {
       super.clear();
-      id_ = 0;
-
       title_ = "";
 
       content_ = "";
-
-      createdAt_ = 0L;
-
-      modifiedAt_ = 0L;
 
       return this;
     }
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return Blog.internal_static_org_banulp_BlogPost_descriptor;
+      return Blog.internal_static_org_banulp_CreateBlogPostRequest_descriptor;
     }
 
-    public BlogPost getDefaultInstanceForType() {
-      return BlogPost.getDefaultInstance();
+    public CreateBlogPostRequest getDefaultInstanceForType() {
+      return CreateBlogPostRequest.getDefaultInstance();
     }
 
-    public BlogPost build() {
-      BlogPost result = buildPartial();
+    public CreateBlogPostRequest build() {
+      CreateBlogPostRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public BlogPost buildPartial() {
-      BlogPost result = new BlogPost(this);
-      result.id_ = id_;
+    public CreateBlogPostRequest buildPartial() {
+      CreateBlogPostRequest result = new CreateBlogPostRequest(this);
       result.title_ = title_;
       result.content_ = content_;
-      result.createdAt_ = createdAt_;
-      result.modifiedAt_ = modifiedAt_;
       onBuilt();
       return result;
     }
@@ -489,19 +400,16 @@ public  final class BlogPost extends
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof BlogPost) {
-        return mergeFrom((BlogPost)other);
+      if (other instanceof CreateBlogPostRequest) {
+        return mergeFrom((CreateBlogPostRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(BlogPost other) {
-      if (other == BlogPost.getDefaultInstance()) return this;
-      if (other.getId() != 0) {
-        setId(other.getId());
-      }
+    public Builder mergeFrom(CreateBlogPostRequest other) {
+      if (other == CreateBlogPostRequest.getDefaultInstance()) return this;
       if (!other.getTitle().isEmpty()) {
         title_ = other.title_;
         onChanged();
@@ -509,12 +417,6 @@ public  final class BlogPost extends
       if (!other.getContent().isEmpty()) {
         content_ = other.content_;
         onChanged();
-      }
-      if (other.getCreatedAt() != 0L) {
-        setCreatedAt(other.getCreatedAt());
-      }
-      if (other.getModifiedAt() != 0L) {
-        setModifiedAt(other.getModifiedAt());
       }
       onChanged();
       return this;
@@ -528,11 +430,11 @@ public  final class BlogPost extends
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      BlogPost parsedMessage = null;
+      CreateBlogPostRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (BlogPost) e.getUnfinishedMessage();
+        parsedMessage = (CreateBlogPostRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -542,35 +444,9 @@ public  final class BlogPost extends
       return this;
     }
 
-    private int id_ ;
-    /**
-     * <code>int32 id = 1;</code>
-     */
-    public int getId() {
-      return id_;
-    }
-    /**
-     * <code>int32 id = 1;</code>
-     */
-    public Builder setId(int value) {
-      
-      id_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 id = 1;</code>
-     */
-    public Builder clearId() {
-      
-      id_ = 0;
-      onChanged();
-      return this;
-    }
-
     private Object title_ = "";
     /**
-     * <code>string title = 2;</code>
+     * <code>string title = 1;</code>
      */
     public String getTitle() {
       Object ref = title_;
@@ -585,7 +461,7 @@ public  final class BlogPost extends
       }
     }
     /**
-     * <code>string title = 2;</code>
+     * <code>string title = 1;</code>
      */
     public com.google.protobuf.ByteString
         getTitleBytes() {
@@ -601,7 +477,7 @@ public  final class BlogPost extends
       }
     }
     /**
-     * <code>string title = 2;</code>
+     * <code>string title = 1;</code>
      */
     public Builder setTitle(
         String value) {
@@ -614,7 +490,7 @@ public  final class BlogPost extends
       return this;
     }
     /**
-     * <code>string title = 2;</code>
+     * <code>string title = 1;</code>
      */
     public Builder clearTitle() {
       
@@ -623,7 +499,7 @@ public  final class BlogPost extends
       return this;
     }
     /**
-     * <code>string title = 2;</code>
+     * <code>string title = 1;</code>
      */
     public Builder setTitleBytes(
         com.google.protobuf.ByteString value) {
@@ -639,7 +515,7 @@ public  final class BlogPost extends
 
     private Object content_ = "";
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 2;</code>
      */
     public String getContent() {
       Object ref = content_;
@@ -654,7 +530,7 @@ public  final class BlogPost extends
       }
     }
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 2;</code>
      */
     public com.google.protobuf.ByteString
         getContentBytes() {
@@ -670,7 +546,7 @@ public  final class BlogPost extends
       }
     }
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 2;</code>
      */
     public Builder setContent(
         String value) {
@@ -683,7 +559,7 @@ public  final class BlogPost extends
       return this;
     }
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 2;</code>
      */
     public Builder clearContent() {
       
@@ -692,7 +568,7 @@ public  final class BlogPost extends
       return this;
     }
     /**
-     * <code>string content = 3;</code>
+     * <code>string content = 2;</code>
      */
     public Builder setContentBytes(
         com.google.protobuf.ByteString value) {
@@ -702,58 +578,6 @@ public  final class BlogPost extends
   checkByteStringIsUtf8(value);
       
       content_ = value;
-      onChanged();
-      return this;
-    }
-
-    private long createdAt_ ;
-    /**
-     * <code>int64 createdAt = 4;</code>
-     */
-    public long getCreatedAt() {
-      return createdAt_;
-    }
-    /**
-     * <code>int64 createdAt = 4;</code>
-     */
-    public Builder setCreatedAt(long value) {
-      
-      createdAt_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int64 createdAt = 4;</code>
-     */
-    public Builder clearCreatedAt() {
-      
-      createdAt_ = 0L;
-      onChanged();
-      return this;
-    }
-
-    private long modifiedAt_ ;
-    /**
-     * <code>int64 modifiedAt = 5;</code>
-     */
-    public long getModifiedAt() {
-      return modifiedAt_;
-    }
-    /**
-     * <code>int64 modifiedAt = 5;</code>
-     */
-    public Builder setModifiedAt(long value) {
-      
-      modifiedAt_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int64 modifiedAt = 5;</code>
-     */
-    public Builder clearModifiedAt() {
-      
-      modifiedAt_ = 0L;
       onChanged();
       return this;
     }
@@ -768,39 +592,39 @@ public  final class BlogPost extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:org.banulp.BlogPost)
+    // @@protoc_insertion_point(builder_scope:org.banulp.CreateBlogPostRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:org.banulp.BlogPost)
-  private static final BlogPost DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:org.banulp.CreateBlogPostRequest)
+  private static final CreateBlogPostRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new BlogPost();
+    DEFAULT_INSTANCE = new CreateBlogPostRequest();
   }
 
-  public static BlogPost getDefaultInstance() {
+  public static CreateBlogPostRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<BlogPost>
-      PARSER = new com.google.protobuf.AbstractParser<BlogPost>() {
-    public BlogPost parsePartialFrom(
+  private static final com.google.protobuf.Parser<CreateBlogPostRequest>
+      PARSER = new com.google.protobuf.AbstractParser<CreateBlogPostRequest>() {
+    public CreateBlogPostRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BlogPost(input, extensionRegistry);
+        return new CreateBlogPostRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<BlogPost> parser() {
+  public static com.google.protobuf.Parser<CreateBlogPostRequest> parser() {
     return PARSER;
   }
 
   @Override
-  public com.google.protobuf.Parser<BlogPost> getParserForType() {
+  public com.google.protobuf.Parser<CreateBlogPostRequest> getParserForType() {
     return PARSER;
   }
 
-  public BlogPost getDefaultInstanceForType() {
+  public CreateBlogPostRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

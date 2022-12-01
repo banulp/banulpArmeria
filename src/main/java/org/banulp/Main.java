@@ -1,44 +1,31 @@
 package org.banulp;
 
-import com.linecorp.armeria.common.*;
-import com.linecorp.armeria.server.AbstractHttpService;
 import com.linecorp.armeria.server.Server;
-import com.linecorp.armeria.server.ServerBuilder;
-import com.linecorp.armeria.server.ServiceRequestContext;
-import com.linecorp.armeria.server.annotation.*;
-import com.linecorp.armeria.server.docs.DocService;
-import com.linecorp.armeria.server.logging.LoggingService;
+import com.linecorp.armeria.server.grpc.GrpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.CompletableFuture;
-
 public class Main {
-
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    static Server newServer(int port) {
-        ServerBuilder sb = Server.builder();
-
-        DocService docService = DocService.builder().exampleRequests(BlogService.class,
-                                "createBlogPost", // Name of service method
-                                "{\"title\":\"My first blog\", \"content\":\"Hello Armeria!\"}")
+    static Server newServer(int port) throws Exception {
+        final GrpcService grpcService =
+                GrpcService.builder()
+                        .addService(new BlogService())
+                        .exceptionMapping(new GrpcExceptionHandler())
+                        .useBlockingTaskExecutor(true)
                         .build();
-
-        return sb.http(port)
-//                .service("/", (ctx, req) -> HttpResponse.of("Hello, Armeria!"))
-                .annotatedService(new BlogService())
-                .serviceUnder("/docs", docService)
+        return Server.builder()
+                .http(port)
+                .service(grpcService)
                 .build();
     }
+    public static void main(String[] args) throws Exception {
+        final Server server = newServer(8080);
 
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+        server.closeOnJvmShutdown().thenRun(() -> {
+            logger.info("Server has been stopped.");
+        });
 
-        Server server = newServer(8080);
-        server.closeOnJvmShutdown();
         server.start().join();
-
-        logger.info("Server has been started. Serving dummy service at http://127.0.0.1:{}/docs",
-                server.activeLocalPort());
     }
 }

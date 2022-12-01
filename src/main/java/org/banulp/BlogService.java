@@ -1,52 +1,107 @@
 package org.banulp;
 
-import com.linecorp.armeria.common.HttpResponse;
-import com.linecorp.armeria.common.HttpStatus;
-import com.linecorp.armeria.server.annotation.*;
+import com.google.protobuf.Empty;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
-public class BlogService {
+final class BlogService extends BlogServiceGrpc.BlogServiceImplBase {
+
+    private static final Logger logger = LoggerFactory.getLogger(BlogService.class);
+    private final AtomicInteger idGenerator = new AtomicInteger();
     private final Map<Integer, BlogPost> blogPosts = new ConcurrentHashMap<>();
 
-    @Post("/blogs")
-    @RequestConverter(BlogPostRequestConverter.class)
-    public HttpResponse createBlogPost(BlogPost blogPost) {
-        blogPosts.put(blogPost.getId(), blogPost);
-        return HttpResponse.ofJson(blogPost);
+    @Override
+    public void createBlogPost(CreateBlogPostRequest request, StreamObserver<BlogPost> responseObserver) {
+        final int id = idGenerator.getAndIncrement(); // Generate post ID
+        final Instant now = Instant.now();            // Get current time
+        final BlogPost updated = BlogPost.newBuilder()
+                .setId(id)
+                .setTitle(request.getTitle())
+                .setContent(request.getContent())
+                .setModifiedAt(now.toEpochMilli())
+                .setCreatedAt(now.toEpochMilli())
+                .build();
+        blogPosts.put(id, updated);
+        responseObserver.onNext(updated);
+        responseObserver.onCompleted();
+
+        logger.info("[createBlogPost] {} Title: {} Content: {}", blogPosts.size(),
+                request.getTitle(), request.getContent());
     }
 
-    @Get("/blogs/:id")
-    public HttpResponse getBlogPost(@Param int id) {
-        BlogPost blogPost = blogPosts.get(id);
-        return HttpResponse.ofJson(blogPost);
+    @Override
+    public void getBlogPost(GetBlogPostRequest request, StreamObserver<BlogPost> responseObserver) {
+        final BlogPost blogPost = blogPosts.get(request.getId());
+        if (blogPost == null) {
+            responseObserver.onError(
+                    Status.NOT_FOUND.withDescription("The blog post does not exist. ID: " + request.getId())
+                            .asRuntimeException());
+        } else {
+            responseObserver.onNext(blogPost);
+            responseObserver.onCompleted();
+        }
     }
 
-    @Put("/blogs/:id")
-    public HttpResponse updateBlogPost(@Param int id, @RequestObject BlogPost blogPost) {
-        BlogPost oldBlogPost = blogPosts.get(id);
-        // Check if the given blog post exists
+    @Override
+    public void listBlogPosts(ListBlogPostsRequest request,
+                              StreamObserver<ListBlogPostsResponse> responseObserver) {
+        final Collection<BlogPost> blogPosts;
+        if (request.getDescending()) {
+            blogPosts = this.blogPosts.entrySet()
+                    .stream()
+                    .sorted(Collections.reverseOrder(Comparator.comparingInt(Map.Entry::getKey)))
+                    .map(Map.Entry::getValue).collect(Collectors.toList());
+        } else {
+            blogPosts = this.blogPosts.values();
+        }
+        responseObserver.onNext(ListBlogPostsResponse.newBuilder().addAllBlogs(blogPosts).build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void updateBlogPost(UpdateBlogPostRequest request, StreamObserver<BlogPost> responseObserver) {
+        final BlogPost oldBlogPost = blogPosts.get(request.getId());
         if (oldBlogPost == null) {
-            // Return a Not Found error. See the next section for instructions
-            return HttpResponse.of(HttpStatus.NOT_FOUND);
+            throw new BlogNotFoundException("The blog post does not exist. ID: " + request.getId());
+        } else {
+            final BlogPost newBlogPost = oldBlogPost.toBuilder()
+                    .setTitle(request.getTitle())
+                    .setContent(request.getContent())
+                    .setModifiedAt(Instant.now().toEpochMilli())
+                    .build();
+            blogPosts.put(request.getId(), newBlogPost);
+            responseObserver.onNext(newBlogPost);
+            responseObserver.onCompleted();
         }
-        BlogPost newBlogPost = new BlogPost(id, blogPost.getTitle(),
-                blogPost.getContent(),
-                oldBlogPost.getCreatedAt(),
-                blogPost.getCreatedAt());
-        blogPosts.put(id, newBlogPost); // Update the info in the map
-        return HttpResponse.ofJson(newBlogPost);
     }
 
-    @Blocking
-    @Delete("/blogs/:id")
-    @ExceptionHandler(BadRequestExceptionHandler.class)
-    public HttpResponse deleteBlogPost(@Param int id) {
-        BlogPost removed = blogPosts.remove(id);
-        if (removed == null) {
-            throw new IllegalArgumentException("The blog post does not exist. id: " + id);
+    @Override
+    public void deleteBlogPost(DeleteBlogPostRequest request, StreamObserver<Empty> responseObserver) {
+        try {
+            // Simulate a blocking API call.
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return HttpResponse.of(HttpStatus.NO_CONTENT);
+
+        final BlogPost removed = blogPosts.remove(request.getId());
+        if (removed == null) {
+            responseObserver.onError(new IllegalArgumentException("The blog post does not exist. ID: " + request.getId()));
+        } else {
+            responseObserver.onNext(Empty.getDefaultInstance());
+            responseObserver.onCompleted();
+        }
     }
+
 }
