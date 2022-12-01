@@ -1,12 +1,18 @@
 package org.banulp;
 
+import com.linecorp.armeria.client.ClientBuilder;
+import com.linecorp.armeria.client.Clients;
 import com.linecorp.armeria.client.grpc.GrpcClients;
 import com.linecorp.armeria.client.logging.LoggingClient;
+import com.linecorp.armeria.common.HttpData;
 import io.grpc.StatusRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BlogClient {
     private static final Logger logger = LoggerFactory.getLogger(BlogClient.class);
@@ -16,9 +22,35 @@ public class BlogClient {
 //        client = GrpcClients.newClient("http://127.0.0.1:8080/",
 //                BlogServiceGrpc.BlogServiceBlockingStub.class);
 
+        ////////////
+
+//        ClientBuilder cb = Clients.builder("http");
+//        cb.decorator((delegate, ctx, req) -> {
+//            final AtomicBoolean initialHttpData = new AtomicBoolean(true);
+//
+//            return delegate
+//                    .execute(ctx, req)
+//                    .mapHeaders(headers -> headers.toBuilder().add("x-foo", "foobar").build())
+//                    .mapData((httpData) -> {
+//                HttpData result = httpData;
+//                if (initialHttpData.get()) {
+//                    initialHttpData.set(false);
+//                    byte[] ascii = "{\"foo\": \"foobar\",".getBytes(StandardCharsets.US_ASCII);
+//                    byte[] combined = Arrays.copyOf(ascii, ascii.length + httpData.length() - 1);
+//                    System.arraycopy(httpData.array(), 1, combined, ascii.length, httpData.length());
+//                    result = HttpData.wrap(combined);
+//                }
+//                return result;
+//            });
+//        });
+
+        ////////////
+
+
         client = GrpcClients.builder("http://127.0.0.1:8080/")
                 .decorator(LoggingClient.newDecorator())  // add this
                 .build(BlogServiceGrpc.BlogServiceBlockingStub.class);
+
         BlogClient blogClient = new BlogClient();
 
         // post

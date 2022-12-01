@@ -1,6 +1,7 @@
 package org.banulp;
 
 import com.google.protobuf.Empty;
+import com.linecorp.armeria.server.ServiceRequestContext;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
@@ -38,6 +39,18 @@ final class BlogService extends BlogServiceGrpc.BlogServiceImplBase {
 
         logger.info("[createBlogPost] {} Title: {} Content: {}", blogPosts.size(),
                 request.getTitle(), request.getContent());
+
+        // case blocking
+//        ServiceRequestContext.current().blockingTaskExecutor().submit(() -> {
+//            // Perform a long-running task.
+//
+//            BlogPost reply = BlogPost.newBuilder()
+//                    .setContent("Hello, " + request.getContent() + '!')
+//                    .build();
+//            responseObserver.onNext(reply);
+//            responseObserver.onCompleted();
+//        });
+
     }
 
     @Override
