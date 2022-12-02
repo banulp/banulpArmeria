@@ -28,6 +28,7 @@ public class Main {
 //                .service("/", (ctx, req) -> HttpResponse.of("Hello, Armeria!"))
                 .annotatedService(new BlogService())
                 .serviceUnder("/docs", docService)
+//                .serviceUnder("/docs", new DocService())
                 .build();
     }
 
